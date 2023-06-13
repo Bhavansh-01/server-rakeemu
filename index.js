@@ -1,6 +1,6 @@
 const express = require('express');
 const expressapp = express();
-const port = process.env.PORT || 4000;
+const port = process.env.PORT || 3000;
 const { initializeApp } = require('firebase/app');
 const { getFirestore, collection, doc, updateDoc, setDoc } = require('firebase/firestore');
 const bodyParser = require('body-parser');
@@ -23,16 +23,27 @@ const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
 
 // Listen for POST requests containing JSON data
-expressapp.post('/', async (req, res) => {
+
+
+expressapp.get('/',(req,res)=>{
+  res.send("welcome")
+})
+
+expressapp.post('/updateSmoke', async (req, res) => { 
   const { id, smoke } = req.body;
-  // console.log(req.body)
-  // console.log(id,smoke)
-  // Update document in Firestore
   await setDoc(doc(db,'smokeSensors',id.toString()),{
     smokeValue : smoke
   });
   res.send("success")
 });
+
+
+// another function to handle post request for temperature
+
+
+
+// antoher function to handle post for vcb tripping
+
 
 // Start server
 expressapp.listen(port, () => {
