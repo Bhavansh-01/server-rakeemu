@@ -39,10 +39,24 @@ expressapp.post('/updateSmoke', async (req, res) => {
 
 
 // another function to handle post request for temperature
+expressapp.post('/updateTemperature', async (req, res) => {
+  const { id, temperature } = req.body;
+  await setDoc(doc(db, 'temperatureSensors', id.toString()), {
+    temperatureValue: temperature
+  });
+  res.send("success");
+});
 
 
 
 // antoher function to handle post for vcb tripping
+expressapp.post('/vcbTripping', async (req, res) => {
+  const { id, isTripped } = req.body;
+  await setDoc(doc(db, 'vcbSensors', id.toString()), {
+    isTripped: isTripped
+  });
+  res.send("success");
+});
 
 
 // Start server
